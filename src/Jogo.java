@@ -176,8 +176,10 @@ public class Jogo {
 
 		desenho.setBackgroundColor(Cor.FUNDO);
 		desenho.setForegroundColor(Cor.TEXTO_SECUNDARIO);
-
-		String pontuacao = "Pontuacao: " + partida.getPontuacao();
+		
+		String pontuacao = String.format("Pontuação: %d (Máx: %d)",
+				partida.getPontuacao(), Partida.getPontuacaoMaxima());
+		
 		desenho.putString(meioTelaH() - pontuacao.length() / 2, linha, pontuacao);
 
 		String legenda = "Setas ou WASD: mover   R: reiniciar   ESC: sair";

@@ -1,11 +1,12 @@
 import java.util.Random;
 
 public class Partida {
-
 	private Grade grade;
 	private ParInt posJogador;
 	private int pontuacao;
 	private boolean fimDeJogo;
+	
+	private static int pontuacaoMaxima;
 
 	public Partida(int largura, int altura) {
 		grade = new Grade(largura, altura);
@@ -34,6 +35,10 @@ public class Partida {
 
 		posJogador = posJogador.somar(direcao.multiplicar(distancia));
 		pontuacao += distancia;
+		
+		if (pontuacao > pontuacaoMaxima) {
+			pontuacaoMaxima = pontuacao;
+		}
 
 		fimDeJogo = contarJogadaValidas() == 0;
 		return true;
@@ -98,5 +103,9 @@ public class Partida {
 
 	public int getElementoGrade(int coluna, int linha) {
 		return grade.olharPosicao(coluna, linha);
+	}
+	
+	public static int getPontuacaoMaxima() {
+		return pontuacaoMaxima;
 	}
 }
