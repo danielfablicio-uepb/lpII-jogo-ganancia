@@ -92,28 +92,27 @@ public class Jogo {
 
 
 	private static ParInt teclaParaDirecao(KeyStroke tecla) {
-		switch (tecla.getKeyType()) {
-		case ArrowUp:
+		if (tecla.getKeyType() != KeyType.Character) {
+			return null;
+		}
+		
+		switch (Character.toUpperCase(tecla.getCharacter())) {
+		case 'W', '8':
 			return Direcao.CIMA;
-		case ArrowDown:
+		case 'X', '2':
 			return Direcao.BAIXO;
-		case ArrowLeft:
+		case 'A', '4':
 			return Direcao.ESQUERDA;
-		case ArrowRight:
+		case 'D', '6':
 			return Direcao.DIREITA;
-		case Character:
-			switch (Character.toUpperCase(tecla.getCharacter())) {
-			case 'W':
-				return Direcao.CIMA;
-			case 'S':
-				return Direcao.BAIXO;
-			case 'A':
-				return Direcao.ESQUERDA;
-			case 'D':
-				return Direcao.DIREITA;
-			default:
-				return null;
-			}
+		case 'Q', '7':
+			return Direcao.CIMA_ESQ;
+		case 'E', '9':
+			return Direcao.CIMA_DIR;
+		case 'Z', '1':
+			return Direcao.BAIXO_ESQ;
+		case 'C', '3':
+			return Direcao.BAIXO_DIR;
 		default:
 			return null;
 		}
