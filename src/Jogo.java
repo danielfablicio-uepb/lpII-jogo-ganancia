@@ -193,20 +193,18 @@ public class Jogo {
 	}
 
 	private static void desenharBorda(TerminalPosition supEsq, TerminalPosition infDir) {
-		int esq = supEsq.getColumn();
-		int dir = infDir.getColumn();
-		int sup = supEsq.getRow();
-		int inf = infDir.getRow();
+		TerminalPosition supDir = supEsq.withColumn(infDir.getColumn());
+		TerminalPosition infEsq = infDir.withColumn(supEsq.getColumn());
 
-		desenho.drawLine(esq + 1, sup, dir - 1, sup, Symbols.SINGLE_LINE_HORIZONTAL);
-		desenho.drawLine(esq + 1, inf, dir - 1, inf, Symbols.SINGLE_LINE_HORIZONTAL);
-		desenho.drawLine(esq, sup + 1, esq, inf - 1, Symbols.SINGLE_LINE_VERTICAL);
-		desenho.drawLine(dir, sup + 1, dir, inf - 1, Symbols.SINGLE_LINE_VERTICAL);
+		desenho.drawLine(supEsq, supDir, Symbols.SINGLE_LINE_HORIZONTAL);
+		desenho.drawLine(infEsq, infDir, Symbols.SINGLE_LINE_HORIZONTAL);
+		desenho.drawLine(supEsq, infEsq, Symbols.SINGLE_LINE_VERTICAL);
+		desenho.drawLine(supDir, infDir, Symbols.SINGLE_LINE_VERTICAL);
 
-		desenho.setCharacter(esq, sup, '╭');
-		desenho.setCharacter(esq, inf, '╰');
-		desenho.setCharacter(dir, sup, '╮');
-		desenho.setCharacter(dir, inf, '╯');
+		desenho.setCharacter(supEsq, '╭');
+		desenho.setCharacter(infEsq, '╰');
+		desenho.setCharacter(supDir, '╮');
+		desenho.setCharacter(infDir, '╯');
 	}
 	
 	private static int meioTelaH() {
