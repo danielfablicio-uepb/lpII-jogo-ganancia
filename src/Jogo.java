@@ -6,7 +6,6 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
@@ -107,7 +106,7 @@ public class Jogo {
 				mostrarAjuda = !mostrarAjuda;
 				break;
 			default:
-				ParInt direcao = teclaParaDirecao(tecla);
+				ParInt direcao = caractereParaDirecao(tecla.getCharacter());
 				if (direcao != null) {
 					partida.moverJogador(direcao);
 				}
@@ -118,12 +117,8 @@ public class Jogo {
 		}
 	}
 
-	private static ParInt teclaParaDirecao(KeyStroke tecla) {
-		if (tecla.getKeyType() != KeyType.Character) {
-			return null;
-		}
-		
-		switch (Character.toUpperCase(tecla.getCharacter())) {
+	private static ParInt caractereParaDirecao(Character caractere) {
+		switch (Character.toUpperCase(caractere)) {
 		case 'W', '8':
 			return Direcao.CIMA;
 		case 'X', '2':
