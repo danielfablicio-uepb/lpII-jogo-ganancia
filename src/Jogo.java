@@ -29,7 +29,6 @@ public class Jogo {
 		dft.setInitialTerminalSize(new TerminalSize(60, 30));
 		dft.setTerminalEmulatorFontConfiguration(SwingTerminalFontConfiguration.getDefaultOfSize(30));
 
-		boolean janelaFechadaPelaGUI = false;
 		try {
 			tela = dft.createScreen();
 
@@ -41,29 +40,7 @@ public class Jogo {
 
 			partida = new Partida(LARGURA_GRADE, ALTURA_GRADE);
 
-			while (true) {
-				KeyStroke tecla = tela.pollInput();
-
-				if (tecla != null) {
-					if (tecla.getKeyType() == KeyType.Escape) {
-						break;
-					}
-					if (tecla.getKeyType() == KeyType.EOF) {
-						janelaFechadaPelaGUI = true;
-						break;
-					}
-
-					if (tecla.getKeyType() == KeyType.Character
-						&& Character.toUpperCase(tecla.getCharacter()) == 'R')
-					{
-						partida = new Partida(LARGURA_GRADE, ALTURA_GRADE);
-					} else {
-						ParInt direcao = teclaParaDirecao(tecla);
-						if (direcao != null) {
-							partida.moverJogador(direcao);
-						}
-					}
-				}
+			while (resolverInput()) {
 
 				tela.doResizeIfNecessary();
 
@@ -95,6 +72,31 @@ public class Jogo {
 		}
 	}
 
+	private static boolean resolverInput() throws IOException {
+		KeyStroke tecla = tela.pollInput();
+		if (tecla == null) {
+			return true;
+		}
+		
+		switch (tecla.getKeyType()) {
+		case Escape:
+			return false;
+		case EOF:
+			janelaFechadaPelaGUI = true;
+			return false;
+		case Character:
+			if (Character.toUpperCase(tecla.getCharacter()) == 'R') {
+				partida = new Partida(LARGURA_GRADE, ALTURA_GRADE);
+			} else {
+				ParInt direcao = teclaParaDirecao(tecla);
+				if (direcao != null) {
+					partida.moverJogador(direcao);
+				}
+			}
+		default:
+			return true;
+		}
+	}
 
 	private static ParInt teclaParaDirecao(KeyStroke tecla) {
 		if (tecla.getKeyType() != KeyType.Character) {
