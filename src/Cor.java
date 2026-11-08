@@ -10,6 +10,8 @@ public class Cor {
     public static final TextColor JOGADOR_FUNDO = new TextColor.RGB(45, 55, 90);
     public static final TextColor JOGADOR_TEXTO = new TextColor.RGB(255, 255, 255);
     public static final TextColor CASA_DESTACADA = new TextColor.RGB(255, 255, 255);
+    public static final TextColor AJUDA_FUNDO = new TextColor.RGB(15, 15, 15);
+    public static final TextColor AJUDA_TEXTO = new TextColor.RGB(240, 240, 240);
 
     private static final TextColor[] DIGITOS = {
     	    new TextColor.RGB( 20,  95, 245), // 1

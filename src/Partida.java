@@ -4,6 +4,7 @@ public class Partida {
 	private Grade grade;
 	private ParInt posJogador;
 	private int pontuacao;
+	private boolean pausarJogo;
 	private boolean fimDeJogo;
 	
 	private static int pontuacaoMaxima;
@@ -20,7 +21,7 @@ public class Partida {
 	}
 
 	public boolean moverJogador(ParInt direcao) {
-		if (fimDeJogo) {
+		if (fimDeJogo || pausarJogo) {
 			return false;
 		}
 
@@ -84,6 +85,10 @@ public class Partida {
 	public boolean terminou() {
 		return fimDeJogo;
 	}
+	
+	public void alternarPausa() {
+		pausarJogo = !pausarJogo;
+	}
 
 	public ParInt getPosJogador() {
 		return posJogador;
@@ -103,6 +108,10 @@ public class Partida {
 
 	public int getElementoGrade(int coluna, int linha) {
 		return grade.olharPosicao(coluna, linha);
+	}
+	
+	public boolean jogoPausado() {
+		return pausarJogo;
 	}
 	
 	public static int getPontuacaoMaxima() {

@@ -21,6 +21,8 @@ public class Jogo {
 	private static TextGraphics desenho;
 	private static Partida partida;
 	
+	private static boolean mostrarAjuda;
+	
 	// Para contornar problema técnico da biblioteca (https://github.com/mabe02/lanterna/issues/391)
 	private static boolean janelaFechadaPelaGUI = false;
 
@@ -48,6 +50,10 @@ public class Jogo {
 				desenharTitulo();
 				desenharGrade();
 				desenharInfo();
+				
+				if (mostrarAjuda) {
+					desenharAjuda();
+				}
 
 				tela.refresh();
 
@@ -85,14 +91,24 @@ public class Jogo {
 			janelaFechadaPelaGUI = true;
 			return false;
 		case Character:
-			if (Character.toUpperCase(tecla.getCharacter()) == 'R') {
-				partida = new Partida(LARGURA_GRADE, ALTURA_GRADE);
-			} else {
+			Character letra = Character.toUpperCase(tecla.getCharacter());
+			switch (letra) {
+			case 'R':
+				if (!partida.jogoPausado()) {
+					partida = new Partida(LARGURA_GRADE, ALTURA_GRADE);
+				}
+				break;
+			case '?':
+				partida.alternarPausa();
+				mostrarAjuda = !mostrarAjuda;
+				break;
+			default:
 				ParInt direcao = teclaParaDirecao(tecla);
 				if (direcao != null) {
 					partida.moverJogador(direcao);
 				}
 			}
+			return true;
 		default:
 			return true;
 		}
@@ -188,7 +204,7 @@ public class Jogo {
 		
 		desenho.putString(meioTelaH() - pontuacao.length() / 2, linha, pontuacao);
 
-		String legenda = "Setas ou WASD: mover   R: reiniciar   ESC: sair";
+		String legenda = "Aperte '?' para ajuda";
 		desenho.setForegroundColor(Cor.LEGENDA);
 		desenho.putString(meioTelaH() - legenda.length() / 2, linha + 3, legenda);
 
@@ -198,6 +214,44 @@ public class Jogo {
 			desenho.setForegroundColor(Cor.FIM_DE_JOGO);
 			desenho.putString(meioTelaH() - mensagem.length() / 2, linha + 1, mensagem, SGR.BLINK);
 		}
+	}
+	
+	private static void desenharAjuda() {
+		TerminalPosition posicao = new TerminalPosition(meioTelaH() - 48 / 2, TOPO_GRADE);
+		
+		desenho.setBackgroundColor(Cor.AJUDA_FUNDO);
+		desenho.setForegroundColor(Cor.AJUDA_TEXTO);
+		desenho.fillRectangle(posicao, new TerminalSize(48, 19), ' ');
+		
+		desenho.enableModifiers(SGR.ITALIC);
+		desenharBlocoTexto(posicao.withRelative(2, 1),
+				"""
+				O objetivo do jogo é apagar a maior parte
+				possível da grade, movendo-se por entre os
+				números que ela contém.
+				
+				Quando você se move, apaga N casas na
+				direção escolhida e recebe N pontos. É
+				inválido mover-se por casas já atrevassadas
+				ou para fora da grade.
+				"""
+		);
+		desenho.disableModifiers(SGR.ITALIC);
+		
+		desenho.enableModifiers(SGR.BOLD);
+		desenharBlocoTexto(posicao.withRelative(2, 10),
+				"""
+				W ou 8: ↑     ESC: Sair
+				X ou 2: ↓       R: Reiniciar
+				A ou 4: ←
+				D ou 6: →
+				Q ou 7: ↖
+				E ou 9: ↗
+				Z ou 1: ↙
+				C ou 3: ↘
+				"""
+		);
+		desenho.disableModifiers(SGR.BOLD);
 	}
 
 	private static void desenharBorda(TerminalPosition supEsq, TerminalPosition infDir) {
@@ -213,6 +267,20 @@ public class Jogo {
 		desenho.setCharacter(infEsq, '╰');
 		desenho.setCharacter(supDir, '╮');
 		desenho.setCharacter(infDir, '╯');
+	}
+	
+	private static void desenharBlocoTexto(TerminalPosition pos, String texto) {
+		String linhaTexto = "";
+	
+		for (int i = 0, cnt = 0; i < texto.length(); i++) {
+			char ch = texto.charAt(i);
+			if (ch == '\n') {
+				desenho.putString(pos.withRelativeRow(cnt++), linhaTexto);
+				linhaTexto = "";
+			} else {
+				linhaTexto += ch;
+			}
+		}
 	}
 	
 	private static int meioTelaH() {
