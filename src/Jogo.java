@@ -19,6 +19,8 @@ public class Jogo {
 
 	private static final int LARGURA_GRADE = 50;
 	private static final int ALTURA_GRADE = 19;
+	
+	private static final char FIGURA_JOGADOR = '♦';
 
 	private static Screen tela;
 	private static TextGraphics desenho;
@@ -177,15 +179,18 @@ public class Jogo {
 		for (int linha = 0; linha < tamanhoGrade.getRows(); linha++) {
 			for (int coluna = 0; coluna < tamanhoGrade.getColumns(); coluna++) {
 				int valor = partida.getElementoGrade(coluna, linha);
-				if (valor == 0) {
-					continue;
+				if (valor != 0) {
+					desenho.setForegroundColor(Cor.digito(valor));
+					desenho.setCharacter(posicao.withRelative(coluna, linha), (char) ('0' + valor));
 				}
-
-				desenho.setForegroundColor(Cor.digito(valor));
-				desenho.setCharacter(posicao.withRelative(coluna, linha), (char) ('0' + valor));
 			}
 		}
-
+		
+		desenharCasasAlcancaveis(posicao);
+		desenharJogador(posicao);
+	}
+	
+	private static void desenharCasasAlcancaveis(TerminalPosition posicaoGrade) {
 		ParInt[] destinos = partida.casasAlcancaveis();
 		
 		for (int i = 0; i < destinos.length; i++) {
@@ -194,15 +199,20 @@ public class Jogo {
 			desenho.setBackgroundColor(Cor.CASA_DESTACADA);
 			desenho.setForegroundColor(Cor.digito(valor));
 			desenho.setCharacter(
-					posicao.withRelative(destinos[i].getX(), destinos[i].getY()),
+					posicaoGrade.withRelative(destinos[i].getX(), destinos[i].getY()),
 					(char) ('0' + valor)
 			);
 		}
+	}
 
+	private static void desenharJogador(TerminalPosition posicaoGrade) {
 		ParInt posicaoJogadorGrade = partida.getPosJogador();
 		desenho.setBackgroundColor(Cor.JOGADOR_FUNDO);
 		desenho.setForegroundColor(Cor.JOGADOR_TEXTO);
-		desenho.setCharacter(posicao.withRelative(posicaoJogadorGrade.getX(), posicaoJogadorGrade.getY()), '♦');
+		desenho.setCharacter(
+				posicaoGrade.withRelative(posicaoJogadorGrade.getX(), posicaoJogadorGrade.getY()),
+				FIGURA_JOGADOR
+		);
 	}
 
 	private static void desenharInfo() {
