@@ -165,7 +165,7 @@ public class Jogo {
 		for (int i = 0; i < destinos.length; i++) {
 			int valor = partida.getElementoGrade(destinos[i].getX(), destinos[i].getY());
 
-			desenho.setBackgroundColor(Cor.JOGADOR_FUNDO);
+			desenho.setBackgroundColor(Cor.CASA_DESTACADA);
 			desenho.setForegroundColor(Cor.digito(valor));
 			desenho.setCharacter(supEsqGrade + destinos[i].getX(), TOPO_GRADE + destinos[i].getY(), (char) ('0' + valor));
 		}
