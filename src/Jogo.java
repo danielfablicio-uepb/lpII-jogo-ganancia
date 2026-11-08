@@ -147,31 +147,42 @@ public class Jogo {
 
 	private static void desenharTitulo() {
 		String texto = "- Ganância (Greed) -";
+		TerminalPosition posicao = new TerminalPosition(
+				meioTelaH() - texto.length() / 2,
+				1
+		);
 
 		desenho.setForegroundColor(Cor.TEXTO);
-		desenho.putString(meioTelaH() - texto.length() / 2, 1, texto, SGR.BOLD);
+		desenho.putString(posicao, texto, SGR.BOLD);
 	}
 
 	private static void desenharGrade() {
-		int largura = partida.getLargura();
-		int altura = partida.getAltura();
-		int supEsqGrade = meioTelaH() - largura / 2;
+		TerminalSize tamanhoGrade = new TerminalSize(
+				partida.getLargura(),
+				partida.getAltura()
+		);
+		
+		TerminalPosition posicao = new TerminalPosition(
+				meioTelaH() - tamanhoGrade.getColumns() / 2,
+				TOPO_GRADE
+		);
 
 		desenho.setBackgroundColor(Cor.FUNDO);
 		desenho.setForegroundColor(Cor.BORDA);
-		desenharBorda(new TerminalPosition(supEsqGrade - 2, TOPO_GRADE - 1),
-				new TerminalPosition(supEsqGrade + largura + 1, TOPO_GRADE + altura));
+		desenharBorda(
+				posicao.withRelative(-2, -1),
+				posicao.withRelative(tamanhoGrade.getColumns() + 1, tamanhoGrade.getRows())
+		);
 
-		for (int linha = 0; linha < altura; linha++) {
-			for (int coluna = 0; coluna < largura; coluna++) {
+		for (int linha = 0; linha < tamanhoGrade.getRows(); linha++) {
+			for (int coluna = 0; coluna < tamanhoGrade.getColumns(); coluna++) {
 				int valor = partida.getElementoGrade(coluna, linha);
 				if (valor == 0) {
 					continue;
 				}
 
-				desenho.setBackgroundColor(Cor.FUNDO);
 				desenho.setForegroundColor(Cor.digito(valor));
-				desenho.setCharacter(supEsqGrade + coluna, TOPO_GRADE + linha, (char) ('0' + valor));
+				desenho.setCharacter(posicao.withRelative(coluna, linha), (char) ('0' + valor));
 			}
 		}
 
@@ -182,14 +193,16 @@ public class Jogo {
 
 			desenho.setBackgroundColor(Cor.CASA_DESTACADA);
 			desenho.setForegroundColor(Cor.digito(valor));
-			desenho.setCharacter(supEsqGrade + destinos[i].getX(), TOPO_GRADE + destinos[i].getY(), (char) ('0' + valor));
+			desenho.setCharacter(
+					posicao.withRelative(destinos[i].getX(), destinos[i].getY()),
+					(char) ('0' + valor)
+			);
 		}
-		
 
-		ParInt pos = partida.getPosJogador();
+		ParInt posicaoJogadorGrade = partida.getPosJogador();
 		desenho.setBackgroundColor(Cor.JOGADOR_FUNDO);
 		desenho.setForegroundColor(Cor.JOGADOR_TEXTO);
-		desenho.setCharacter(supEsqGrade + pos.getX(), TOPO_GRADE + pos.getY(), '♦');
+		desenho.setCharacter(posicao.withRelative(posicaoJogadorGrade.getX(), posicaoJogadorGrade.getY()), '♦');
 	}
 
 	private static void desenharInfo() {
