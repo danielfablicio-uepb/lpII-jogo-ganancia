@@ -20,6 +20,9 @@ public class Jogo {
 	private static Screen tela;
 	private static TextGraphics desenho;
 	private static Partida partida;
+	
+	// Para contornar problema técnico da biblioteca (https://github.com/mabe02/lanterna/issues/391)
+	private static boolean janelaFechadaPelaGUI = false;
 
 	public static void main(String[] args) {
 		DefaultTerminalFactory dft = new DefaultTerminalFactory();
@@ -71,6 +74,8 @@ public class Jogo {
 
 				tela.refresh();
 
+				// Contorna uso de 100% de um núcleo da CPU
+				// por conta do retorno não-bloqueante de tela.pollInput()
 				try {
 					Thread.sleep(16);
 				} catch (InterruptedException e) {
