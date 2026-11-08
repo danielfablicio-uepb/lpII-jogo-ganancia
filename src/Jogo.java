@@ -12,6 +12,10 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
 
 public class Jogo {
+	private static final TerminalSize TAMANHO_DO_TERMINAL = new TerminalSize(60, 30);
+	
+	private static final TerminalSize TAMANHO_MENU_AJUDA = new TerminalSize(48, 19);
+
 	private static final int TOPO_GRADE = 4;
 
 	private static final int LARGURA_GRADE = 50;
@@ -28,7 +32,7 @@ public class Jogo {
 
 	public static void main(String[] args) {
 		DefaultTerminalFactory dft = new DefaultTerminalFactory();
-		dft.setInitialTerminalSize(new TerminalSize(60, 30));
+		dft.setInitialTerminalSize(TAMANHO_DO_TERMINAL);
 		dft.setTerminalEmulatorFontConfiguration(SwingTerminalFontConfiguration.getDefaultOfSize(30));
 
 		try {
@@ -217,11 +221,14 @@ public class Jogo {
 	}
 	
 	private static void desenharAjuda() {
-		TerminalPosition posicao = new TerminalPosition(meioTelaH() - 48 / 2, TOPO_GRADE);
+		TerminalPosition posicao = new TerminalPosition(
+				meioTelaH() - TAMANHO_MENU_AJUDA.getColumns() / 2,
+				TOPO_GRADE
+		);
 		
 		desenho.setBackgroundColor(Cor.AJUDA_FUNDO);
 		desenho.setForegroundColor(Cor.AJUDA_TEXTO);
-		desenho.fillRectangle(posicao, new TerminalSize(48, 19), ' ');
+		desenho.fillRectangle(posicao, TAMANHO_MENU_AJUDA, ' ');
 		
 		desenho.enableModifiers(SGR.ITALIC);
 		desenharBlocoTexto(posicao.withRelative(2, 1),
