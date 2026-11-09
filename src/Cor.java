@@ -14,15 +14,15 @@ public class Cor {
     public static final TextColor AJUDA_TEXTO = new TextColor.RGB(240, 240, 240);
 
     private static final TextColor[] DIGITOS = {
-    	    new TextColor.RGB( 20,  95, 245), // 1
-    	    new TextColor.RGB(  0, 140, 140), // 2
-    	    new TextColor.RGB( 10, 140,  40), // 3
-    	    new TextColor.RGB(110, 135,   0), // 4
-    	    new TextColor.RGB(185, 115,   0), // 5
-    	    new TextColor.RGB(225,  90,   0), // 6
-    	    new TextColor.RGB(225,  40,  25), // 7
-    	    new TextColor.RGB(205,  15,  85), // 8
-    	    new TextColor.RGB(155,  35, 195)  // 9
+    	    new TextColor.RGB( 20,  95, 245),
+    	    new TextColor.RGB(  0, 140, 140),
+    	    new TextColor.RGB( 10, 140,  40),
+    	    new TextColor.RGB(110, 135,   0),
+    	    new TextColor.RGB(185, 115,   0),
+    	    new TextColor.RGB(225,  90,   0),
+    	    new TextColor.RGB(225,  40,  25),
+    	    new TextColor.RGB(205,  15,  85),
+    	    new TextColor.RGB(155,  35, 195)  
     };
     
     public static TextColor digito(int n) {
