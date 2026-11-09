@@ -193,6 +193,7 @@ public class Jogo {
 	private static void desenharCasasAlcancaveis(TerminalPosition posicaoGrade) {
 		ParInt[] destinos = partida.casasAlcancaveis();
 		
+		desenho.enableModifiers(SGR.BOLD);
 		for (int i = 0; i < destinos.length; i++) {
 			int valor = partida.obterElementoGrade(destinos[i].getX(), destinos[i].getY());
 
@@ -203,6 +204,7 @@ public class Jogo {
 					(char) ('0' + valor)
 			);
 		}
+		desenho.disableModifiers(SGR.BOLD);
 	}
 
 	private static void desenharJogador(TerminalPosition posicaoGrade) {
