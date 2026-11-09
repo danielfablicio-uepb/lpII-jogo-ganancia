@@ -157,8 +157,8 @@ public class Jogo {
 
 	private static void desenharGrade() {
 		TerminalSize tamanhoGrade = new TerminalSize(
-				partida.getLargura(),
-				partida.getAltura()
+				partida.obterLarguraGrade(),
+				partida.obterAlturaGrade()
 		);
 		
 		TerminalPosition posicao = new TerminalPosition(
@@ -215,7 +215,7 @@ public class Jogo {
 	}
 
 	private static void desenharInformacoes() {
-		int alturaBase = TOPO_GRADE + partida.getAltura() + 2;
+		int alturaBase = TOPO_GRADE + partida.obterAlturaGrade() + 2;
 
 		desenho.setBackgroundColor(Cor.FUNDO);
 		desenho.setForegroundColor(Cor.TEXTO_SECUNDARIO);

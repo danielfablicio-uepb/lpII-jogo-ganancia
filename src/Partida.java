@@ -86,6 +86,14 @@ public class Partida {
 		pausarJogo = !pausarJogo;
 	}
 
+	public int obterLarguraGrade() {
+		return grade.getLargura();
+	}
+
+	public int obterAlturaGrade() {
+		return grade.getAltura();
+	}
+
 	public int obterElementoGrade(int coluna, int linha) {
 		return grade.olharPosicao(coluna, linha);
 	}
@@ -100,14 +108,6 @@ public class Partida {
 
 	public ParInt getPosJogador() {
 		return posJogador;
-	}
-
-	public int getLargura() {
-		return grade.getLargura();
-	}
-
-	public int getAltura() {
-		return grade.getAltura();
 	}
 
 	public int getPontuacao() {
