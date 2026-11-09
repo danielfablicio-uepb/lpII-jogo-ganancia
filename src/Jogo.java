@@ -233,7 +233,7 @@ public class Jogo {
 		desenho.putString(meioTelaH() - legenda.length() / 2, alturaBase + 3, legenda);
 
 		if (partida.terminou()) {
-			String mensagem = "FIM DE JOGO";
+			String mensagem = "FIM DE JOGO ('R' para reiniciar)";
 
 			desenho.setForegroundColor(Cor.FIM_DE_JOGO);
 			desenho.putString(meioTelaH() - mensagem.length() / 2, alturaBase + 1, mensagem, SGR.BLINK);
@@ -270,7 +270,7 @@ public class Jogo {
 				"""
 				W ou 8: ↑     ESC: Sair
 				X ou 2: ↓       R: Reiniciar
-				A ou 4: ←
+				A ou 4: ←		?: Liga/Desliga ajuda
 				D ou 6: →
 				Q ou 7: ↖
 				E ou 9: ↗
