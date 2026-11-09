@@ -11,10 +11,6 @@ public class ParInt {
 		return new ParInt(x + par.x, y + par.y);
 	}
 	
-	public ParInt subtrair(ParInt par) {
-		return new ParInt(x - par.x, y - par.y);
-	}
-	
 	public ParInt multiplicar(int n) {
 		return new ParInt(x * n, y * n);
 	}

@@ -82,12 +82,20 @@ public class Partida {
 		return casaAdjacente;
 	}
 
+	public void alternarPausa() {
+		pausarJogo = !pausarJogo;
+	}
+
+	public int obterElementoGrade(int coluna, int linha) {
+		return grade.olharPosicao(coluna, linha);
+	}
+
 	public boolean terminou() {
 		return fimDeJogo;
 	}
 	
-	public void alternarPausa() {
-		pausarJogo = !pausarJogo;
+	public boolean jogoPausado() {
+		return pausarJogo;
 	}
 
 	public ParInt getPosJogador() {
@@ -104,14 +112,6 @@ public class Partida {
 
 	public int getPontuacao() {
 		return pontuacao;
-	}
-
-	public int getElementoGrade(int coluna, int linha) {
-		return grade.olharPosicao(coluna, linha);
-	}
-	
-	public boolean jogoPausado() {
-		return pausarJogo;
 	}
 	
 	public static int getPontuacaoMaxima() {

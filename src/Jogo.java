@@ -54,7 +54,7 @@ public class Jogo {
 				desenharFundo();
 				desenharTitulo();
 				desenharGrade();
-				desenharInfo();
+				desenharInformacoes();
 				
 				if (mostrarAjuda) {
 					desenharAjuda();
@@ -178,7 +178,7 @@ public class Jogo {
 
 		for (int linha = 0; linha < tamanhoGrade.getRows(); linha++) {
 			for (int coluna = 0; coluna < tamanhoGrade.getColumns(); coluna++) {
-				int valor = partida.getElementoGrade(coluna, linha);
+				int valor = partida.obterElementoGrade(coluna, linha);
 				if (valor != 0) {
 					desenho.setForegroundColor(Cor.digito(valor));
 					desenho.setCharacter(posicao.withRelative(coluna, linha), (char) ('0' + valor));
@@ -194,7 +194,7 @@ public class Jogo {
 		ParInt[] destinos = partida.casasAlcancaveis();
 		
 		for (int i = 0; i < destinos.length; i++) {
-			int valor = partida.getElementoGrade(destinos[i].getX(), destinos[i].getY());
+			int valor = partida.obterElementoGrade(destinos[i].getX(), destinos[i].getY());
 
 			desenho.setBackgroundColor(Cor.CASA_DESTACADA);
 			desenho.setForegroundColor(Cor.digito(valor));
@@ -215,8 +215,8 @@ public class Jogo {
 		);
 	}
 
-	private static void desenharInfo() {
-		int linha = TOPO_GRADE + partida.getAltura() + 2;
+	private static void desenharInformacoes() {
+		int alturaBase = TOPO_GRADE + partida.getAltura() + 2;
 
 		desenho.setBackgroundColor(Cor.FUNDO);
 		desenho.setForegroundColor(Cor.TEXTO_SECUNDARIO);
@@ -224,17 +224,17 @@ public class Jogo {
 		String pontuacao = String.format("Pontuação: %d (Máx: %d)",
 				partida.getPontuacao(), Partida.getPontuacaoMaxima());
 		
-		desenho.putString(meioTelaH() - pontuacao.length() / 2, linha, pontuacao);
+		desenho.putString(meioTelaH() - pontuacao.length() / 2, alturaBase, pontuacao);
 
 		String legenda = "Aperte '?' para ajuda";
 		desenho.setForegroundColor(Cor.LEGENDA);
-		desenho.putString(meioTelaH() - legenda.length() / 2, linha + 3, legenda);
+		desenho.putString(meioTelaH() - legenda.length() / 2, alturaBase + 3, legenda);
 
 		if (partida.terminou()) {
 			String mensagem = "FIM DE JOGO";
 
 			desenho.setForegroundColor(Cor.FIM_DE_JOGO);
-			desenho.putString(meioTelaH() - mensagem.length() / 2, linha + 1, mensagem, SGR.BLINK);
+			desenho.putString(meioTelaH() - mensagem.length() / 2, alturaBase + 1, mensagem, SGR.BLINK);
 		}
 	}
 	
