@@ -9,11 +9,11 @@ public class Partida {
 	
 	private static int pontuacaoMaxima;
 
-	public Partida(int largura, int altura) {
-		grade = new Grade(largura, altura);
+	public Partida(int larguraGrade, int alturaGrade) {
+		grade = new Grade(larguraGrade, alturaGrade);
 
 		Random r = new Random();
-		posJogador = new ParInt(r.nextInt(largura), r.nextInt(altura));
+		posJogador = new ParInt(r.nextInt(larguraGrade), r.nextInt(alturaGrade));
 
 		grade.retirarNumero(posJogador);
 

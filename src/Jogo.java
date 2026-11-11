@@ -23,7 +23,7 @@ public class Jogo {
 	private static final char FIGURA_JOGADOR = '♦';
 
 	private static Screen tela;
-	private static TextGraphics desenho;
+	private static TextGraphics desenhador;
 	private static Partida partida;
 	
 	private static boolean mostrarAjuda;
@@ -42,7 +42,7 @@ public class Jogo {
 
 			tela.setCursorPosition(null);
 
-			desenho = tela.newTextGraphics();
+			desenhador = tela.newTextGraphics();
 
 			partida = new Partida(LARGURA_GRADE, ALTURA_GRADE);
 
@@ -140,8 +140,8 @@ public class Jogo {
 	}
 
 	private static void desenharFundo() {
-		desenho.setBackgroundColor(Cor.FUNDO);
-		desenho.fill(' ');
+		desenhador.setBackgroundColor(Cor.FUNDO);
+		desenhador.fill(' ');
 	}
 
 	private static void desenharTitulo() {
@@ -151,8 +151,8 @@ public class Jogo {
 				1
 		);
 
-		desenho.setForegroundColor(Cor.TEXTO);
-		desenho.putString(posicao, texto, SGR.BOLD);
+		desenhador.setForegroundColor(Cor.TEXTO);
+		desenhador.putString(posicao, texto, SGR.BOLD);
 	}
 
 	private static void desenharGrade() {
@@ -166,8 +166,8 @@ public class Jogo {
 				TOPO_GRADE
 		);
 
-		desenho.setBackgroundColor(Cor.FUNDO);
-		desenho.setForegroundColor(Cor.BORDA);
+		desenhador.setBackgroundColor(Cor.FUNDO);
+		desenhador.setForegroundColor(Cor.BORDA);
 		desenharBorda(
 				posicao.withRelative(-2, -1),
 				posicao.withRelative(tamanhoGrade.getColumns() + 1, tamanhoGrade.getRows())
@@ -177,8 +177,8 @@ public class Jogo {
 			for (int coluna = 0; coluna < tamanhoGrade.getColumns(); coluna++) {
 				int valor = partida.obterElementoGrade(coluna, linha);
 				if (valor != 0) {
-					desenho.setForegroundColor(Cor.digito(valor));
-					desenho.setCharacter(posicao.withRelative(coluna, linha), (char) ('0' + valor));
+					desenhador.setForegroundColor(Cor.digito(valor));
+					desenhador.setCharacter(posicao.withRelative(coluna, linha), (char) ('0' + valor));
 				}
 			}
 		}
@@ -190,25 +190,25 @@ public class Jogo {
 	private static void desenharCasasAlcancaveis(TerminalPosition posicaoGrade) {
 		ParInt[] destinos = partida.casasAlcancaveis();
 		
-		desenho.enableModifiers(SGR.BOLD);
+		desenhador.enableModifiers(SGR.BOLD);
 		for (int i = 0; i < destinos.length; i++) {
 			int valor = partida.obterElementoGrade(destinos[i].getX(), destinos[i].getY());
 
-			desenho.setBackgroundColor(Cor.digito(valor));
-			desenho.setForegroundColor(Cor.DIGITO_DESTACADO);
-			desenho.setCharacter(
+			desenhador.setBackgroundColor(Cor.digito(valor));
+			desenhador.setForegroundColor(Cor.DIGITO_DESTACADO);
+			desenhador.setCharacter(
 					posicaoGrade.withRelative(destinos[i].getX(), destinos[i].getY()),
 					(char) ('0' + valor)
 			);
 		}
-		desenho.disableModifiers(SGR.BOLD);
+		desenhador.disableModifiers(SGR.BOLD);
 	}
 
 	private static void desenharJogador(TerminalPosition posicaoGrade) {
 		ParInt posicaoJogadorGrade = partida.getPosJogador();
-		desenho.setBackgroundColor(Cor.JOGADOR_FUNDO);
-		desenho.setForegroundColor(Cor.JOGADOR_TEXTO);
-		desenho.setCharacter(
+		desenhador.setBackgroundColor(Cor.JOGADOR_FUNDO);
+		desenhador.setForegroundColor(Cor.JOGADOR_TEXTO);
+		desenhador.setCharacter(
 				posicaoGrade.withRelative(posicaoJogadorGrade.getX(), posicaoJogadorGrade.getY()),
 				FIGURA_JOGADOR
 		);
@@ -217,23 +217,23 @@ public class Jogo {
 	private static void desenharInformacoes() {
 		int alturaBase = TOPO_GRADE + partida.obterAlturaGrade() + 2;
 
-		desenho.setBackgroundColor(Cor.FUNDO);
-		desenho.setForegroundColor(Cor.TEXTO_SECUNDARIO);
+		desenhador.setBackgroundColor(Cor.FUNDO);
+		desenhador.setForegroundColor(Cor.TEXTO_SECUNDARIO);
 		
 		String pontuacao = String.format("Pontuação: %d (Máx: %d)",
 				partida.getPontuacao(), Partida.getPontuacaoMaxima());
 		
-		desenho.putString(meioTelaH() - pontuacao.length() / 2, alturaBase, pontuacao);
+		desenhador.putString(meioTelaH() - pontuacao.length() / 2, alturaBase, pontuacao);
 
 		String legenda = "Aperte '?' para ajuda";
-		desenho.setForegroundColor(Cor.LEGENDA);
-		desenho.putString(meioTelaH() - legenda.length() / 2, alturaBase + 3, legenda);
+		desenhador.setForegroundColor(Cor.LEGENDA);
+		desenhador.putString(meioTelaH() - legenda.length() / 2, alturaBase + 3, legenda);
 
 		if (partida.terminou()) {
 			String mensagem = "FIM DE JOGO ('R' para reiniciar)";
 
-			desenho.setForegroundColor(Cor.FIM_DE_JOGO);
-			desenho.putString(meioTelaH() - mensagem.length() / 2, alturaBase + 1, mensagem, SGR.BLINK);
+			desenhador.setForegroundColor(Cor.FIM_DE_JOGO);
+			desenhador.putString(meioTelaH() - mensagem.length() / 2, alturaBase + 1, mensagem, SGR.BLINK);
 		}
 	}
 	
@@ -243,11 +243,11 @@ public class Jogo {
 				TOPO_GRADE - 2
 		);
 		
-		desenho.setBackgroundColor(Cor.AJUDA_FUNDO);
-		desenho.setForegroundColor(Cor.AJUDA_TEXTO);
-		desenho.fillRectangle(posicao, TAMANHO_MENU_AJUDA, ' ');
+		desenhador.setBackgroundColor(Cor.AJUDA_FUNDO);
+		desenhador.setForegroundColor(Cor.AJUDA_TEXTO);
+		desenhador.fillRectangle(posicao, TAMANHO_MENU_AJUDA, ' ');
 		
-		desenho.enableModifiers(SGR.ITALIC);
+		desenhador.enableModifiers(SGR.ITALIC);
 		desenharBlocoTexto(posicao.withRelative(2, 1),
 				"""
 				O objetivo do jogo é apagar a maior
@@ -260,9 +260,9 @@ public class Jogo {
 				atrevassadas ou para fora da grade.
 				"""
 		);
-		desenho.disableModifiers(SGR.ITALIC);
+		desenhador.disableModifiers(SGR.ITALIC);
 		
-		desenho.enableModifiers(SGR.BOLD);
+		desenhador.enableModifiers(SGR.BOLD);
 		desenharBlocoTexto(posicao.withRelative(2, 10),
 				"""
 				W ou 8: ↑     ESC: Sair
@@ -275,22 +275,22 @@ public class Jogo {
 				C ou 3: ↘
 				"""
 		);
-		desenho.disableModifiers(SGR.BOLD);
+		desenhador.disableModifiers(SGR.BOLD);
 	}
 
 	private static void desenharBorda(TerminalPosition supEsq, TerminalPosition infDir) {
 		TerminalPosition supDir = supEsq.withColumn(infDir.getColumn());
 		TerminalPosition infEsq = infDir.withColumn(supEsq.getColumn());
 
-		desenho.drawLine(supEsq, supDir, Symbols.SINGLE_LINE_HORIZONTAL);
-		desenho.drawLine(infEsq, infDir, Symbols.SINGLE_LINE_HORIZONTAL);
-		desenho.drawLine(supEsq, infEsq, Symbols.SINGLE_LINE_VERTICAL);
-		desenho.drawLine(supDir, infDir, Symbols.SINGLE_LINE_VERTICAL);
+		desenhador.drawLine(supEsq, supDir, Symbols.SINGLE_LINE_HORIZONTAL);
+		desenhador.drawLine(infEsq, infDir, Symbols.SINGLE_LINE_HORIZONTAL);
+		desenhador.drawLine(supEsq, infEsq, Symbols.SINGLE_LINE_VERTICAL);
+		desenhador.drawLine(supDir, infDir, Symbols.SINGLE_LINE_VERTICAL);
 
-		desenho.setCharacter(supEsq, '╭');
-		desenho.setCharacter(infEsq, '╰');
-		desenho.setCharacter(supDir, '╮');
-		desenho.setCharacter(infDir, '╯');
+		desenhador.setCharacter(supEsq, '╭');
+		desenhador.setCharacter(infEsq, '╰');
+		desenhador.setCharacter(supDir, '╮');
+		desenhador.setCharacter(infDir, '╯');
 	}
 	
 	private static void desenharBlocoTexto(TerminalPosition pos, String texto) {
@@ -299,7 +299,7 @@ public class Jogo {
 		for (int i = 0, cnt = 0; i < texto.length(); i++) {
 			char ch = texto.charAt(i);
 			if (ch == '\n') {
-				desenho.putString(pos.withRelativeRow(cnt++), linhaTexto);
+				desenhador.putString(pos.withRelativeRow(cnt++), linhaTexto);
 				linhaTexto = "";
 			} else {
 				linhaTexto += ch;
