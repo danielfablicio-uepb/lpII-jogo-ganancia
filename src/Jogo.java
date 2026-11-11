@@ -11,14 +11,14 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
 
 public class Jogo {
-	private static final TerminalSize TAMANHO_DO_TERMINAL = new TerminalSize(60, 30);
+	private static final TerminalSize TAMANHO_DO_TERMINAL = new TerminalSize(50, 24);
 	
-	private static final TerminalSize TAMANHO_MENU_AJUDA = new TerminalSize(48, 19);
+	private static final TerminalSize TAMANHO_MENU_AJUDA = new TerminalSize(40, 19);
 
 	private static final int TOPO_GRADE = 4;
 
-	private static final int LARGURA_GRADE = 50;
-	private static final int ALTURA_GRADE = 19;
+	private static final int LARGURA_GRADE = 40;
+	private static final int ALTURA_GRADE = 12;
 	
 	private static final char FIGURA_JOGADOR = '♦';
 
@@ -240,7 +240,7 @@ public class Jogo {
 	private static void desenharAjuda() {
 		TerminalPosition posicao = new TerminalPosition(
 				meioTelaH() - TAMANHO_MENU_AJUDA.getColumns() / 2,
-				TOPO_GRADE
+				TOPO_GRADE - 2
 		);
 		
 		desenho.setBackgroundColor(Cor.AJUDA_FUNDO);
@@ -250,14 +250,14 @@ public class Jogo {
 		desenho.enableModifiers(SGR.ITALIC);
 		desenharBlocoTexto(posicao.withRelative(2, 1),
 				"""
-				O objetivo do jogo é apagar a maior parte
-				possível da grade, movendo-se por entre os
-				números que ela contém.
+				O objetivo do jogo é apagar a maior
+				parte possível da grade, movendo-se
+				por entre os números que ela contém.
 				
 				Quando você se move, apaga N casas na
-				direção escolhida e recebe N pontos. É
-				inválido mover-se por casas já atrevassadas
-				ou para fora da grade.
+				direção escolhida e recebe N pontos.
+				É inválido mover-se por casas já
+				atrevassadas ou para fora da grade.
 				"""
 		);
 		desenho.disableModifiers(SGR.ITALIC);
@@ -267,8 +267,8 @@ public class Jogo {
 				"""
 				W ou 8: ↑     ESC: Sair
 				X ou 2: ↓       R: Reiniciar
-				A ou 4: ←		?: Liga/Desliga ajuda
-				D ou 6: →
+				A ou 4: ←       ?: Liga/Desliga
+				D ou 6: →          ajuda
 				Q ou 7: ↖
 				E ou 9: ↗
 				Z ou 1: ↙
