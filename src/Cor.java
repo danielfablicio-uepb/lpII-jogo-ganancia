@@ -1,31 +1,31 @@
 import com.googlecode.lanterna.TextColor;
 
 public class Cor {
-	public static final TextColor FUNDO = new TextColor.RGB(212, 212, 208);
-	public static final TextColor BORDA = new TextColor.RGB(190, 190, 190);
-    public static final TextColor TEXTO = new TextColor.RGB(35, 35, 35);
-    public static final TextColor TEXTO_SECUNDARIO = new TextColor.RGB(70, 70, 70);
-    public static final TextColor LEGENDA = new TextColor.RGB(130, 130, 125);
-    public static final TextColor FIM_DE_JOGO = new TextColor.RGB(180, 40, 40);
-    public static final TextColor JOGADOR_FUNDO = new TextColor.RGB(45, 55, 90);
-    public static final TextColor JOGADOR_TEXTO = new TextColor.RGB(255, 255, 255);
-    public static final TextColor CASA_DESTACADA = new TextColor.RGB(25, 25, 25);
-    public static final TextColor AJUDA_FUNDO = new TextColor.RGB(15, 15, 15);
-    public static final TextColor AJUDA_TEXTO = new TextColor.RGB(240, 240, 240);
+	public static final TextColor FUNDO = new TextColor.RGB(28, 30, 38);
+	public static final TextColor BORDA = new TextColor.RGB(78, 85, 106);
+	public static final TextColor TEXTO = new TextColor.RGB(232, 232, 226);
+	public static final TextColor TEXTO_SECUNDARIO = new TextColor.RGB(184, 186, 196);
+	public static final TextColor LEGENDA = new TextColor.RGB(122, 126, 140);
+	public static final TextColor FIM_DE_JOGO = new TextColor.RGB(255, 100, 100);
+	public static final TextColor JOGADOR_FUNDO = new TextColor.RGB(236, 236, 228);
+	public static final TextColor JOGADOR_TEXTO = new TextColor.RGB(28, 30, 38);
+	public static final TextColor DIGITO_DESTACADO = new TextColor.RGB(255, 255, 255);
+	public static final TextColor AJUDA_FUNDO = new TextColor.RGB(50, 56, 78);
+	public static final TextColor AJUDA_TEXTO = new TextColor.RGB(238, 238, 232);
 
-    private static final TextColor[] DIGITOS = {
-    	    new TextColor.RGB( 20,  95, 245),
-    	    new TextColor.RGB(  0, 140, 140),
-    	    new TextColor.RGB( 10, 140,  40),
-    	    new TextColor.RGB(110, 135,   0),
-    	    new TextColor.RGB(185, 115,   0),
-    	    new TextColor.RGB(225,  90,   0),
-    	    new TextColor.RGB(225,  40,  25),
-    	    new TextColor.RGB(205,  15,  85),
-    	    new TextColor.RGB(155,  35, 195)  
-    };
-    
-    public static TextColor digito(int n) {
-    	return DIGITOS[n - 1];
-    }
+	private static final TextColor[] DIGITOS = {
+			new TextColor.RGB(135, 179, 255),
+			new TextColor.RGB(  0, 198, 185),
+			new TextColor.RGB(  5, 205,  39),
+			new TextColor.RGB(163, 188,   0),
+			new TextColor.RGB(228, 168,   0),
+			new TextColor.RGB(255, 150,  90),
+			new TextColor.RGB(255, 145, 149),
+			new TextColor.RGB(255, 139, 205),
+			new TextColor.RGB(211, 153, 255)
+	};
+
+	public static TextColor digito(int n) {
+		return DIGITOS[n - 1];
+	}
 }

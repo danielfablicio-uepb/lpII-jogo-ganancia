@@ -194,8 +194,8 @@ public class Jogo {
 		for (int i = 0; i < destinos.length; i++) {
 			int valor = partida.obterElementoGrade(destinos[i].getX(), destinos[i].getY());
 
-			desenho.setBackgroundColor(Cor.CASA_DESTACADA);
-			desenho.setForegroundColor(Cor.digito(valor));
+			desenho.setBackgroundColor(Cor.digito(valor));
+			desenho.setForegroundColor(Cor.DIGITO_DESTACADO);
 			desenho.setCharacter(
 					posicaoGrade.withRelative(destinos[i].getX(), destinos[i].getY()),
 					(char) ('0' + valor)
